@@ -2,7 +2,7 @@
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Í·ÎÄ¼ş
+// å¤´æ–‡ä»¶
 #include <Windows.h>
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <stdio.h>
@@ -20,7 +20,7 @@
 #include <regex>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// µ¼³öº¯Êı
+// å¯¼å‡ºå‡½æ•°
 #pragma comment(linker, "/EXPORT:GetFileVersionInfoA=_AheadLib_GetFileVersionInfoA,@1")
 #pragma comment(linker, "/EXPORT:GetFileVersionInfoByHandle=_AheadLib_GetFileVersionInfoByHandle,@2")
 #pragma comment(linker, "/EXPORT:GetFileVersionInfoExA=_AheadLib_GetFileVersionInfoExA,@3")
@@ -43,7 +43,7 @@
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Ô­º¯ÊıµØÖ·Ö¸Õë
+// åŸå‡½æ•°åœ°å€æŒ‡é’ˆ
 PVOID pfnGetFileVersionInfoA;
 PVOID pfnGetFileVersionInfoByHandle;
 PVOID pfnGetFileVersionInfoExA;
@@ -66,7 +66,7 @@ PVOID pfnVerQueryValueW;
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// ºê¶¨Òå
+// å®å®šä¹‰
 #define EXTERNC extern "C"
 #define NAKED __declspec(naked)
 #define EXPORT __declspec(dllexport)
@@ -80,14 +80,14 @@ PVOID pfnVerQueryValueW;
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// AheadLib ÃüÃû¿Õ¼ä
+// AheadLib å‘½åç©ºé—´
 namespace AheadLib
 {
-	HMODULE m_hModule = NULL;	// Ô­Ê¼Ä£¿é¾ä±ú
-	DWORD m_dwReturn[17] = { 0 };	// Ô­Ê¼º¯Êı·µ»ØµØÖ·
+	HMODULE m_hModule = NULL;	// åŸå§‹æ¨¡å—å¥æŸ„
+	DWORD m_dwReturn[17] = { 0 };	// åŸå§‹å‡½æ•°è¿”å›åœ°å€
 
 
-	// »ñÈ¡Ô­Ê¼º¯ÊıµØÖ·
+	// è·å–åŸå§‹å‡½æ•°åœ°å€
 	FARPROC WINAPI GetAddress(PCSTR pszProcName)
 	{
 		FARPROC fpAddress;
@@ -103,7 +103,7 @@ namespace AheadLib
 				pszProcName = szProcName;
 			}
 
-			wsprintf(tzTemp, TEXT("ÎŞ·¨ÕÒµ½º¯Êı %hs£¬³ÌĞòÎŞ·¨Õı³£ÔËĞĞ¡£"), pszProcName);
+			wsprintf(tzTemp, TEXT("æ— æ³•æ‰¾åˆ°å‡½æ•° %hsï¼Œç¨‹åºæ— æ³•æ­£å¸¸è¿è¡Œã€‚"), pszProcName);
 			MessageBox(NULL, tzTemp, TEXT("AheadLib"), MB_ICONSTOP);
 			ExitProcess(-2);
 		}
@@ -111,7 +111,7 @@ namespace AheadLib
 		return fpAddress;
 	}
 
-	// ³õÊ¼»¯Ô­Ê¼º¯ÊıµØÖ·Ö¸Õë
+	// åˆå§‹åŒ–åŸå§‹å‡½æ•°åœ°å€æŒ‡é’ˆ
 	inline VOID WINAPI InitializeAddresses()
 	{
 		pfnGetFileVersionInfoA = GetAddress("GetFileVersionInfoA");
@@ -133,7 +133,7 @@ namespace AheadLib
 		pfnVerQueryValueW = GetAddress("VerQueryValueW");
 	}
 
-	// ¼ÓÔØÔ­Ê¼Ä£¿é
+	// åŠ è½½åŸå§‹æ¨¡å—
 	inline BOOL WINAPI Load()
 	{
 		TCHAR tzPath[MAX_PATH];
@@ -144,7 +144,7 @@ namespace AheadLib
 		m_hModule = LoadLibrary(tzPath);
 		if (m_hModule == NULL)
 		{
-			wsprintf(tzTemp, TEXT("ÎŞ·¨¼ÓÔØ %s£¬³ÌĞòÎŞ·¨Õı³£ÔËĞĞ¡£"), tzPath);
+			wsprintf(tzTemp, TEXT("æ— æ³•åŠ è½½ %sï¼Œç¨‹åºæ— æ³•æ­£å¸¸è¿è¡Œã€‚"), tzPath);
 			MessageBox(NULL, tzTemp, TEXT("AheadLib"), MB_ICONSTOP);
 		}
 		else
@@ -155,7 +155,7 @@ namespace AheadLib
 		return (m_hModule != NULL);
 	}
 
-	// ÊÍ·ÅÔ­Ê¼Ä£¿é
+	// é‡Šæ”¾åŸå§‹æ¨¡å—
 	inline VOID WINAPI Free()
 	{
 		if (m_hModule)
@@ -234,7 +234,7 @@ BOOL WINAPI MyCreateProcessW(
 	if (_hasProxy && idx != std::string::npos) {
 		std::string::size_type proxyServerIdx = cmd.find(L"--proxy-server");
 		if (proxyServerIdx == std::string::npos) {
-			//Ìí¼Ó²ÎÊı
+			//æ·»åŠ å‚æ•°
 			cmd.append(L" --proxy-server==");
 			cmd.append(_proxy);
 			return pMyCreateProcessW(lpApplicationName, (LPWSTR)cmd.c_str(), lpProcessAttributes, lpThreadAttributes, bInheritHandles, dwCreationFlags, lpEnvironment, lpCurrentDirectory, lpStartupInfo, lpProcessInformation);;
@@ -287,18 +287,31 @@ BOOL APIENTRY LoadProxyConfig() {
 			}
 		}
 		else {
-			//Î´ÕÒµ½¹Ø¼ü×Ö
+			//æœªæ‰¾åˆ°å…³é”®å­—
 		}
 		
 	} else {
 
-		//ÁíÒ»¸öÅäÖÃ·½°¸£¬ÔİÊ±²»Ê¹ÓÃ
-		const wchar_t* lpPath = L".\\proxy.ini";
-		auto result = GetPrivateProfileStringW(L"Config", L"Proxy", L"", _proxy, 512, lpPath);
-		_hasProxy = result != 0;
-		
+		//å¦ä¸€ä¸ªé…ç½®æ–¹æ¡ˆï¼Œæš‚æ—¶ä¸ä½¿ç”¨
+		//const wchar_t* lpPath = L".\\proxy.ini";
+		//auto result = GetPrivateProfileStringW(L"Config", L"Proxy", L"", _proxy, 512, lpPath);
+		//_hasProxy = result != 0;
+		using namespace std;
+		auto cmd = "--proxy-server=http://127.0.0.1:59986";
+		std::string regexp_string(".*--proxy-server(={1,2})(.[^\\s]*)(\\s{0,1}|$|.*)"); // Nothing to be escaped here, right?
+		std::regex  regexp_to_match(regexp_string);
+		smatch matchResult;
+		if (std::regex_match(cmd, matchResult, regexp_to_match)) {
+			if (matchResult.size() == 4) {
+				//OutputDebugStringA(matchResult[2].str().c_str());
+				auto wide = Utf8toUtf16(matchResult[2].str());
+				wmemcpy(_proxy, wide.c_str(), wide.size());
+				_hasProxy = true;
+			}
+		}
+
 		//wchar_t* log = new wchar_t[512];
-		//swprintf_s(log, 512, L"¶ÁÈ¡´úÀíÅäÖÃ %d %s", _hasProxy, _proxy);
+		//swprintf_s(log, 512, L"è¯»å–ä»£ç†é…ç½® %d %s", _hasProxy, _proxy);
 		//OutputDebugStringW(log);
 		//delete[] log;
 	}
@@ -328,7 +341,7 @@ BOOL APIENTRY UnInstallHook() {
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Èë¿Úº¯Êı
+// å…¥å£å‡½æ•°
 BOOL WINAPI DllMain(HMODULE hModule, DWORD dwReason, PVOID pvReserved)
 {
 	if (dwReason == DLL_PROCESS_ATTACH)
@@ -351,7 +364,7 @@ BOOL WINAPI DllMain(HMODULE hModule, DWORD dwReason, PVOID pvReserved)
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// µ¼³öº¯Êı
+// å¯¼å‡ºå‡½æ•°
 ALCDECL AheadLib_GetFileVersionInfoA(void)
 {
 	__asm JMP pfnGetFileVersionInfoA;
@@ -361,7 +374,7 @@ ALCDECL AheadLib_GetFileVersionInfoA(void)
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// µ¼³öº¯Êı
+// å¯¼å‡ºå‡½æ•°
 ALCDECL AheadLib_GetFileVersionInfoByHandle(void)
 {
 	__asm JMP pfnGetFileVersionInfoByHandle;
@@ -371,7 +384,7 @@ ALCDECL AheadLib_GetFileVersionInfoByHandle(void)
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// µ¼³öº¯Êı
+// å¯¼å‡ºå‡½æ•°
 ALCDECL AheadLib_GetFileVersionInfoExA(void)
 {
 	__asm JMP pfnGetFileVersionInfoExA;
@@ -381,7 +394,7 @@ ALCDECL AheadLib_GetFileVersionInfoExA(void)
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// µ¼³öº¯Êı
+// å¯¼å‡ºå‡½æ•°
 ALCDECL AheadLib_GetFileVersionInfoExW(void)
 {
 	__asm JMP pfnGetFileVersionInfoExW;
@@ -391,7 +404,7 @@ ALCDECL AheadLib_GetFileVersionInfoExW(void)
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// µ¼³öº¯Êı
+// å¯¼å‡ºå‡½æ•°
 ALCDECL AheadLib_GetFileVersionInfoSizeA(void)
 {
 	__asm JMP pfnGetFileVersionInfoSizeA;
@@ -401,7 +414,7 @@ ALCDECL AheadLib_GetFileVersionInfoSizeA(void)
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// µ¼³öº¯Êı
+// å¯¼å‡ºå‡½æ•°
 ALCDECL AheadLib_GetFileVersionInfoSizeExA(void)
 {
 	__asm JMP pfnGetFileVersionInfoSizeExA;
@@ -411,7 +424,7 @@ ALCDECL AheadLib_GetFileVersionInfoSizeExA(void)
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// µ¼³öº¯Êı
+// å¯¼å‡ºå‡½æ•°
 ALCDECL AheadLib_GetFileVersionInfoSizeExW(void)
 {
 	__asm JMP pfnGetFileVersionInfoSizeExW;
@@ -421,7 +434,7 @@ ALCDECL AheadLib_GetFileVersionInfoSizeExW(void)
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// µ¼³öº¯Êı
+// å¯¼å‡ºå‡½æ•°
 ALCDECL AheadLib_GetFileVersionInfoSizeW(void)
 {
 	__asm JMP pfnGetFileVersionInfoSizeW;
@@ -431,7 +444,7 @@ ALCDECL AheadLib_GetFileVersionInfoSizeW(void)
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// µ¼³öº¯Êı
+// å¯¼å‡ºå‡½æ•°
 ALCDECL AheadLib_GetFileVersionInfoW(void)
 {
 	__asm JMP pfnGetFileVersionInfoW;
@@ -441,7 +454,7 @@ ALCDECL AheadLib_GetFileVersionInfoW(void)
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// µ¼³öº¯Êı
+// å¯¼å‡ºå‡½æ•°
 ALCDECL AheadLib_VerFindFileA(void)
 {
 	__asm JMP pfnVerFindFileA;
@@ -451,7 +464,7 @@ ALCDECL AheadLib_VerFindFileA(void)
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// µ¼³öº¯Êı
+// å¯¼å‡ºå‡½æ•°
 ALCDECL AheadLib_VerFindFileW(void)
 {
 	__asm JMP pfnVerFindFileW;
@@ -461,7 +474,7 @@ ALCDECL AheadLib_VerFindFileW(void)
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// µ¼³öº¯Êı
+// å¯¼å‡ºå‡½æ•°
 ALCDECL AheadLib_VerInstallFileA(void)
 {
 	__asm JMP pfnVerInstallFileA;
@@ -471,7 +484,7 @@ ALCDECL AheadLib_VerInstallFileA(void)
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// µ¼³öº¯Êı
+// å¯¼å‡ºå‡½æ•°
 ALCDECL AheadLib_VerInstallFileW(void)
 {
 	__asm JMP pfnVerInstallFileW;
@@ -481,7 +494,7 @@ ALCDECL AheadLib_VerInstallFileW(void)
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// µ¼³öº¯Êı
+// å¯¼å‡ºå‡½æ•°
 ALCDECL AheadLib_VerLanguageNameA(void)
 {
 	__asm JMP pfnVerLanguageNameA;
@@ -491,7 +504,7 @@ ALCDECL AheadLib_VerLanguageNameA(void)
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// µ¼³öº¯Êı
+// å¯¼å‡ºå‡½æ•°
 ALCDECL AheadLib_VerLanguageNameW(void)
 {
 	__asm JMP pfnVerLanguageNameW;
@@ -501,7 +514,7 @@ ALCDECL AheadLib_VerLanguageNameW(void)
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// µ¼³öº¯Êı
+// å¯¼å‡ºå‡½æ•°
 ALCDECL AheadLib_VerQueryValueA(void)
 {
 	__asm JMP pfnVerQueryValueA;
@@ -511,7 +524,7 @@ ALCDECL AheadLib_VerQueryValueA(void)
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// µ¼³öº¯Êı
+// å¯¼å‡ºå‡½æ•°
 ALCDECL AheadLib_VerQueryValueW(void)
 {
 	__asm JMP pfnVerQueryValueW;
