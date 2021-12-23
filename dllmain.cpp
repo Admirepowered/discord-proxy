@@ -297,7 +297,7 @@ BOOL APIENTRY LoadProxyConfig() {
 		//auto result = GetPrivateProfileStringW(L"Config", L"Proxy", L"", _proxy, 512, lpPath);
 		//_hasProxy = result != 0;
 		using namespace std;
-		auto cmd = "--proxy-server=http://127.0.0.1:59986";
+		cmd = "--proxy-server=http://127.0.0.1:59986";
 		std::string regexp_string(".*--proxy-server(={1,2})(.[^\\s]*)(\\s{0,1}|$|.*)"); // Nothing to be escaped here, right?
 		std::regex  regexp_to_match(regexp_string);
 		smatch matchResult;
